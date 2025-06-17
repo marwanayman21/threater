@@ -1,0 +1,296 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-800 p-4">
+  <div class="relative w-full max-w-[350px] md:max-w-[500px] lg:max-w-[750px]
+              h-[740px] md:h-[650px]
+              {{ isLoginActive ? 'lg:h-[600px]' : 'lg:h-[780px]' }}
+              bg-gray-900 rounded-[30px] shadow-xl overflow-hidden">
+    <!-- Fluid Background -->
+    <div class="relative top-0 left-0">
+      <img
+        src="assets/img/fluid-1.svg"
+        [class.animate-scale]="isAnimating"
+        class="absolute top-[-55px] left-[-50px] w-[250px] h-[200px] md:w-[450px] md:top-[-70px] md:left-[-120px] md:h-[250px] lg:w-[500px] lg:top-[-150px] lg:left-[-120px] lg:h-[330px] rotate-90 scale-100 z-10"
+        (animationend)="onAnimationEnd()">
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm"
+      [class.left-0]="isLoginActive"
+      [class.left-[-100%]]="!isLoginActive"
+      [class.opacity-100]="isLoginActive"
+      [class.opacity-0]="!isLoginActive"
+      class="absolute flex flex-col justify-between w-full h-full p-6 md:p-8 lg:p-10 transition-all duration-1000 delay-300 z-20">
+
+      <!-- Form Icons -->
+      <div class="flex justify-between z-50">
+        <i class="bx bx-log-in-circle text-[#ede7e7] text-2xl md:text-3xl">
+      <!-- Form Title -->
+      <div class="text-[#ede7e7] text-xl md:text-2xl font-medium mb-10 md:mb-12 lg:mb-12 z-50">
+        <span>Welcome <br> Back</span>
+      </div>
+        </i>
+        <i
+          (click)="showRegister()"
+          class="bx bx-user-plus text-[#7D476C] text-2xl md:text-3xl cursor-pointer"></i>
+      </div>
+
+
+
+      <!-- Form Inputs -->
+      <div>
+        <!-- Email Input -->
+        <div class="relative my-6 md:my-8 z-50">
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            placeholder=" "
+            class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+            required>
+          <label
+            for="email"
+            class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+                   peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+            Email
+          </label>
+          <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+               class="text-red-500 text-xs mt-1">
+            <span *ngIf="loginForm.get('email')?.hasError('required')">Email is required</span>
+            <span *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <!-- Password Input -->
+<div class="relative my-4 md:my-6 lg:my-2 z-50">
+  <input
+    [type]="showPassword ? 'text' : 'password'"
+    id="log-password"
+    formControlName="password"
+    placeholder=" "
+    class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+    required>
+  <label
+    for="log-password"
+    class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+           peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+    Password
+  </label>
+  <div class="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer" (click)="showPassword = !showPassword">
+    <i [class]="showPassword ? 'bx bx-show' : 'bx bx-hide'" class="text-[#7D476C]"></i>
+  </div>
+
+  <!-- رسائل التحقق من الباسورد -->
+            <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                          class="text-red-500 text-xs mt-1">
+                        Password is required
+          </div>
+</div>
+
+        <!-- Submit Button -->
+        <div class="relative my-6 md:my-8 z-50">
+          <button (click)="onLogin()" [disabled]="loginForm.invalid || isLoading"
+            class="flex items-center justify-center gap-1 w-full h-12 md:h-14 text-base md:text-lg bg-[#7D476C] text-[#ede7e7] rounded-full transition-all duration-300
+                  hover:gap-4 disabled:opacity-50">
+            <span *ngIf="!isLoading">Sign In</span>
+            <span *ngIf="isLoading">Processing...</span>
+            <i *ngIf="!isLoading" class="bx bx-arrow-back rotate-180"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Links -->
+      <div class="flex justify-between z-50 text-base md:text-lg">
+        <a (click)="showRegister()" class="text-[#7D476C] font-medium cursor-pointer">Sign Up</a>
+        <a (click)="showForgotPassword()" class="text-[#7D476C] font-medium cursor-pointer">Forgot password?</a>
+      </div>
+    </form>
+
+    <!-- Register Form -->
+    <form [formGroup]="registerForm"
+      [class.left-0]="!isLoginActive"
+      [class.left-[100%]]="isLoginActive"
+      [class.opacity-100]="!isLoginActive"
+      [class.opacity-0]="isLoginActive"
+      class="absolute flex flex-col justify-between w-full h-full p-6 md:p-8 lg:p-6 transition-all duration-1000 delay-300 z-20">
+
+      <!-- Form Icons -->
+      <div class="flex justify-between z-50 lg:mb-12">
+        <i class="bx bx-user-plus text-[#ede7e7] text-2xl md:text-3xl"><div class="text-[#ede7e7] text-xl md:text-2xl font-medium mb-10 md:mb-12 lg:mb-12 z-50">
+        <span>Create Account <br> Now</span>
+      </div></i>
+        <i
+          (click)="showLogin()"
+          class="bx bx-log-in-circle text-[#7D476C] text-2xl md:text-3xl cursor-pointer"></i>
+      </div>
+
+
+
+      <!-- Form Inputs -->
+      <div class="flex flex-col">
+        <!-- Username Input -->
+        <div class="flex z-50">
+          <!-- First Name -->
+          <div class="relative flex-1 my-4 md:my-6 lg:my-2">
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              placeholder=" "
+              class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+              required>
+            <label
+              for="firstName"
+              class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+                    peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+              First Name
+            </label>
+            <div *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)"
+                 class="text-red-500 text-xs mt-1">
+              <span *ngIf="registerForm.get('firstName')?.hasError('required')">First name is required</span>
+              <span *ngIf="registerForm.get('firstName')?.hasError('invalidName')">Name should not contain numbers</span>
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="relative flex-1 my-4 md:my-6 lg:my-2">
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              placeholder=" "
+              class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+              required>
+            <label
+              for="lastName"
+              class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+                    peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+              Last Name
+            </label>
+            <div *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)"
+                 class="text-red-500 text-xs mt-1">
+              <span *ngIf="registerForm.get('lastName')?.hasError('required')">Last name is required</span>
+              <span *ngIf="registerForm.get('lastName')?.hasError('invalidName')">Name should not contain numbers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Input -->
+        <div class="relative my-4 md:my-6 lg:my-2 z-50">
+          <input
+            type="text"
+            id="reg-email"
+            formControlName="email"
+            placeholder=" "
+            class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+            required>
+          <label
+            for="reg-email"
+            class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+                   peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+            Email
+          </label>
+          <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)"
+               class="text-red-500 text-xs mt-1">
+            <span *ngIf="registerForm.get('email')?.hasError('required')">Email is required</span>
+            <span *ngIf="registerForm.get('email')?.hasError('email')">Please enter a valid email</span>
+          </div>
+        </div>
+
+<!-- Password Input -->
+  <div class="relative">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      id="reg-password"
+      formControlName="password"
+      placeholder=" "
+      class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+      required>
+    <label
+      for="reg-password"
+      class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+             peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+      Password
+    </label>
+    <div class="absolute right-0 top-3 cursor-pointer" (click)="showPassword = !showPassword">
+      <i [class]="showPassword ? 'bx bx-show' : 'bx bx-hide'" class="text-[#7D476C] text-xl"></i>
+    </div>
+
+  <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)"
+  class="text-red-500 text-xs mt-2">
+    <div class="grid grid-cols-2 gap-x-2 gap-y-1">
+      <div *ngIf="registerForm.get('password')?.hasError('missingUpperCase')"
+           class="flex items-start">
+        <i class='bx bx-x text-red-500 mr-1 mt-0.5'></i> <span>Uppercase letter</span>
+      </div>
+      <div *ngIf="registerForm.get('password')?.hasError('missingLowerCase')"
+           class="flex items-start">
+        <i class='bx bx-x text-red-500 mr-1 mt-0.5'></i> <span>Lowercase letter</span>
+      </div>
+      <div *ngIf="registerForm.get('password')?.hasError('missingNumber')"
+           class="flex items-start">
+        <i class='bx bx-x text-red-500 mr-1 mt-0.5'></i> <span>Number</span>
+      </div>
+      <div *ngIf="registerForm.get('password')?.hasError('missingSymbol')"
+           class="flex items-start">
+        <i class='bx bx-x text-red-500 mr-1 mt-0.5'></i> <span>Special character</span>
+      </div>
+    </div>
+    <div *ngIf="registerForm.get('password')?.hasError('minLength')"
+         class="flex items-start mt-1">
+      <i class='bx bx-x text-red-500 mr-1 mt-0.5'></i> <span>At least 8 characters</span>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Password Input -->
+<div class="relative my-4 md:my-6 lg:my-2 z-50">
+  <input
+    [type]="showConfirmPassword ? 'text' : 'password'"
+    id="reg-confirm-password"
+    formControlName="confirmPassword"
+    placeholder=" "
+    class="text-white w-full h-12 md:h-14 text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+    required>
+  <label
+    for="reg-confirm-password"
+    class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+           peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+    Confirm Password
+  </label>
+  <div class="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer" (click)="showConfirmPassword = !showConfirmPassword">
+    <i [class]="showConfirmPassword ? 'bx bx-show' : 'bx bx-hide'" class="text-[#7D476C]"></i>
+  </div>
+  <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+       class="text-red-500 text-xs mt-1">
+    <span *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Confirm password is required</span>
+  </div>
+  <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched"
+       class="text-red-500 text-xs mt-1">
+    Passwords do not match
+  </div>
+</div>
+
+        <!-- Submit Button -->
+        <div class="relative my-6 md:my-8 lg:my-6 z-50">
+          <button (click)="onRegister()" [disabled]="registerForm.invalid || isLoading"
+            class="flex items-center justify-center gap-1 w-full h-12 md:h-14 text-base md:text-lg bg-[#7D476C] text-[#ede7e7] rounded-full transition-all duration-300
+                  hover:gap-4 disabled:opacity-50">
+            <span *ngIf="!isLoading">Sign Up</span>
+            <span *ngIf="isLoading">Processing...</span>
+            <i *ngIf="!isLoading" class="bx bx-arrow-back rotate-180"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Links -->
+      <div class="flex justify-between z-50 text-base md:text-lg mt-4">
+        <h1 class="text-[#7D476C] font-medium">Already have an account?</h1>
+        <a (click)="showLogin()" class="text-gray-200 font-medium cursor-pointer">Sign In</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-md z-50">
+    {{ errorMessage }}
+  </div>
+</div>

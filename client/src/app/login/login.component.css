@@ -1,0 +1,111 @@
+/* Add this to your global styles.css or this component's CSS */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+/* Animation */
+@keyframes scale {
+  from {
+    transform: rotate(90deg) scale(1);
+  }
+  to {
+    transform: rotate(90deg) scale(8);
+  }
+}
+/* Eye icon styles */
+.bx-show, .bx-hide {
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+/* Password requirements list */
+.text-xs div {
+  margin-top: 0.1rem;
+}
+/* تثبيت الـ Label إذا كان الحقل به قيمة */
+input:not(:placeholder-shown) + label,
+input:focus + label {
+  top: -5% !important;
+  transform: translateY(0) !important;
+  font-size: 0.875rem !important; /* text-sm */
+}
+
+/* إخفاء الـ placeholder إذا كان الحقل مُختار */
+input:focus::placeholder {
+  opacity: 0;
+}
+.animate-scale {
+  animation: scale 0.8s ease alternate 2;
+}
+/* تنسيق رسائل الخطأ */
+.text-red-500 {
+  color: #ef4444;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+/* تنسيق رسائل تحقق الباسورد */
+.password-errors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+}
+
+.password-error-item {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+/* تعديلات للهواتف */
+@media (max-width: 640px) {
+  .password-errors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* أيقونات التحقق */
+.bx-x {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+/* تغيير لون الحدود عند الخطأ */
+input.ng-invalid.ng-touched {
+  border-color: #ef4444 !important;
+}
+
+label.ng-invalid.ng-touched {
+  color: #ef4444 !important;
+}
+/* في login.component.css */
+@media (min-width: 1024px) {
+  .lg\:p-10 {
+    padding: 2.5rem;
+  }
+
+  .lg\:mb-20 {
+    margin-bottom: 5rem;
+  }
+
+  .flex.justify-between.z-50 {
+    margin-top: auto;
+    padding-bottom: 1rem;
+  }
+}
+/* تنسيقات حقول الاسم المزدوجة */
+.flex.gap-4 > div {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .flex.gap-4 {
+    flex-direction: column;
+    gap: 0;
+  }
+}

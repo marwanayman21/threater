@@ -1,0 +1,41 @@
+<!-- Bookings Table -->
+<app-admin-navbar></app-admin-navbar>
+<div class="min-h-screen bg-gray-900 py-10 px-4">
+<div class="p-6">
+  <h2 class="text-xl text-gray-100 font-semibold mb-4">Pending Reservations</h2>
+  <div class="overflow-auto rounded-lg shadow">
+    <table class="min-w-full bg-gray-50">
+      <thead class="bg-gray-200 text-gray-600 text-sm">
+        <tr>
+          <th class="py-2 px-4">Booking ID</th>
+          <th class="py-2 px-4">Status</th>
+          <th class="py-2 px-4">User Name</th>
+          <th class="py-2 px-4">User ID</th>
+          <th class="py-2 px-4">Show Date</th>
+          <th class="py-2 px-4">Seats</th>
+          <th class="py-2 px-4">Price</th>
+          <th class="py-2 px-4">Email</th>
+          <th class="py-2 px-4">Request Date</th>
+          <th class="py-2 px-4">Confirmation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Request of Requests" class="border-b">
+          <td class="py-2 px-4">{{ Request.id }}</td>
+          <td class="py-2 px-4 text-yellow-600 font-semibold">{{ Request.status }}</td>
+          <td class="py-2 px-4">{{ Request.userName }}</td>
+          <td class="py-2 px-4">{{ Request.userId }}</td>
+          <td class="py-2 px-4">{{ Request.showDate }}</td>
+          <td class="py-2 px-4">{{ Request.seats }}</td>
+          <td class="py-2 px-4">{{ Request.totalPrice }} EGP</td>
+          <td class="py-2 px-4">{{ Request.email }}</td>
+          <td class="py-2 px-4">{{ Request.requestDate }}</td>
+          <td class="py-2 px-4 flex gap-2">
+            <button (click)="confirm(Request.id)" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Confirm</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

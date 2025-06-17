@@ -1,0 +1,93 @@
+<div class="min-h-screen bg-gray-900 text-white">
+  <!-- Header/Navbar -->
+  <app-header></app-header>
+
+  <!-- Poster للمسرحية الرئيسية -->
+  <section class="pt-24 px-4 md:px-24">
+    <div class="relative h-96 rounded-xl overflow-hidden">
+      <div *ngIf="!isImageLoaded('../../assets/img/Covor.webp') && !isImageLoaded('../../assets/img/poster.webp')"
+           class="absolute inset-0 bg-gray-700 animate-pulse"></div>
+        <img
+          src="../../assets/img/Covor.webp"
+          alt="Poster"
+          class="hidden md:block w-full h-full object-cover"
+          loading="eager"
+          width="1200"
+          height="600"
+          (load)="onImageLoad($event)"
+        >
+        <img
+          src="../../assets/img/poster.webp"
+          alt="Poster Mobile"
+          class="md:hidden w-full h-full object-cover"
+          loading="eager"
+          width="500"
+          height="800"
+          (load)="onImageLoad($event)"
+        >
+
+      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- قسم "مسرحياتنا الآن" -->
+  <section class="py-12 px-4 md:px-24">
+    <h2 class="text-3xl font-bold mb-8 text-center border-b-2 border-cyan-500 pb-2 inline-block">
+      Our plays
+    </h2>
+
+    <!-- بطاقات المسرحيات -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Card 1 -->
+<div
+  class="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg opacity-50 pointer-events-none"
+>
+  <div class="absolute inset-0 bg-black/60 flex items-center justify-center z-20">
+    <span class="text-white text-2xl font-extrabold bg-red-600 px-4 py-2 rounded">closed</span>
+  </div>
+
+  <div class="relative h-64">
+    <div *ngIf="!isImageLoaded('../../assets/img/poster.webp')"
+      class="absolute inset-0 bg-gray-700 animate-pulse"></div>
+    <img
+      src="../../assets/img/poster.webp"
+      alt="مسرحية 1"
+      class="absolute w-full h-full object-cover"
+      loading="lazy"
+      width="500"
+      height="800"
+      (load)="onImageLoad($event)"
+    >
+  </div>
+
+  <div class="p-4">
+    <h3 class="text-xl text-center font-bold">عائله اكسبلور - القاهرة</h3>
+  </div>
+</div>
+
+      <!-- Card 2 -->
+<a
+  routerLink="/play-details2"
+  class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-cyan-500/20 transition-all cursor-pointer active:scale-95"
+>
+  <div class="relative h-64">
+    <div *ngIf="!isImageLoaded('../../assets/img/poster.webp')"
+      class="absolute inset-0 bg-gray-700 animate-pulse"></div>
+    <img
+      src="../../assets/img/poster.webp"
+      alt="مسرحية 2"
+      class="absolute w-full h-full object-cover"
+      loading="lazy"
+      width="500"
+      height="800"
+      (load)="onImageLoad($event)"
+    >
+  </div>
+  <div class="p-4">
+          <h3 class="text-xl text-center font-bold">عائله اكسبلور - الاسكندرية</h3>
+  </div>
+</a>
+
+    </div>
+  </section>
+</div>

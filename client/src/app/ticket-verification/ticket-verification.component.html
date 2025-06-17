@@ -1,0 +1,75 @@
+<div class="min-h-screen bg-gray-900 py-10 px-4">
+  <div class="max-w-2xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
+    <!-- Title -->
+    <h2 class="text-2xl font-bold text-white mb-2">🔍 Ticket Verification</h2>
+    <p class="text-gray-400 mb-6">Scan the QR code or enter the ticket code manually</p>
+
+    <!-- Toggle mode -->
+    <div class="flex justify-center mb-6">
+      <button
+        class="px-4 py-2 w-32 rounded-l text-white font-semibold"
+        [ngClass]="mode === 'scan' ? 'bg-blue-700' : 'bg-blue-600 hover:bg-blue-700'"
+        (click)="mode = 'scan'"
+      >Scan</button>
+      <button
+        class="px-4 py-2 w-32 rounded-r text-white font-semibold"
+        [ngClass]="mode === 'manual' ? 'bg-blue-700' : 'bg-blue-600 hover:bg-blue-700'"
+        (click)="mode = 'manual'"
+      >Manual</button>
+    </div>
+
+    <!-- Scan Mode -->
+    <div *ngIf="mode === 'scan'" class="mb-6">
+      <div class="relative w-full h-64 overflow-hidden rounded border border-gray-600">
+        <zxing-scanner
+          #scanner
+          (scanSuccess)="handleScanSuccess($event)"
+          [device]="currentDevice"
+          [formats]="allowedFormats"
+          class="absolute inset-0 w-full h-full object-cover"
+        ></zxing-scanner>
+      </div>
+    </div>
+
+    <!-- Manual Mode -->
+    <div *ngIf="mode === 'manual'" class="mb-6">
+      <input
+        type="text"
+        placeholder="Enter Ticket ID"
+        [(ngModel)]="scannedTicketId"
+        class="w-full p-3 rounded border border-gray-600 bg-gray-700 text-white placeholder-gray-400"
+      />
+    </div>
+
+    <!-- Ticket ID Preview -->
+    <div *ngIf="scannedTicketId" class="text-gray-300 mb-4 text-center">
+      <p>🎫 <strong>Ticket ID:</strong> {{ scannedTicketId }}</p>
+    </div>
+
+    <!-- Verify Button -->
+    <button
+      (click)="verifyTicket()"
+      class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded disabled:opacity-50"
+      [disabled]="!scannedTicketId || loading"
+    >
+      {{ loading ? 'Verifying...' : '✅ Verify Ticket' }}
+    </button>
+
+    <!-- Result Message -->
+    <div *ngIf="message" class="mt-4 text-center">
+      <p [ngClass]="{ 'text-green-400': success, 'text-red-500': !success }" class="font-bold text-lg">
+        {{ message }}
+      </p>
+    </div>
+
+    <!-- Ticket Details -->
+      <div *ngIf="ticketDetails" class="mt-6 bg-gray-700 text-white rounded-lg p-4 shadow-inner">
+        <h3 class="text-xl font-semibold mb-2">🎟️ Ticket Information</h3>
+        <p><strong>Name:</strong> {{ ticketDetails.user.fullName }}</p>
+        <p><strong>Email:</strong> {{ ticketDetails.user.email }}</p>
+        <p><strong>Show Day:</strong> {{ ticketDetails.showDay }}</p>
+        <p><strong>Seats:</strong> {{ ticketDetails.seatsDescription }}</p>
+      </div>
+
+  </div>
+</div>

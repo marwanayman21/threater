@@ -1,0 +1,131 @@
+<div class="min-h-screen bg-gray-900 text-white">
+  <!-- نافبار التفاصيل -->
+  <app-header-details></app-header-details>
+  <app-showtimes-modal></app-showtimes-modal>
+
+  <!-- القسم الأول - الصورة والمعلومات الأساسية -->
+<!-- القسم الأول - الصورة والمعلومات الأساسية -->
+<section class="bg-gradient-to-b from-cyan-900 to-gray-900 px-6 py-12">
+  <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
+
+    <!-- الصورة -->
+    <div class="w-full lg:w-1/2 h-96">
+      <img src="../../assets/img/poster.webp" alt="مسرحية 1" class="w-full h-full object-cover rounded-lg">
+    </div>
+
+    <!-- المعلومات -->
+    <div class="w-full lg:w-1/2 text-white flex flex-col justify-between" >
+      <div>
+        <h2 class="text-3xl font-bold mb-4">عائله اكسبلور</h2>
+
+        <!-- التاريخ -->
+        <div class="flex items-center mb-3 text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          ابتداءً من ثانى أيام عيد الاضحى
+        </div>
+
+        <!-- المكان -->
+        <div class="flex items-center mb-6 text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          مسرح جراند طيبة - مول - مدينة نصر
+        </div>
+
+        <!-- الزر -->
+<app-some-button></app-some-button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- القسم الثاني - الوصف والمعلومات -->
+  <section class="bg-gray-800 px-6 py-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- الوصف -->
+      <div class="mb-8">
+        <h3 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">Description</h3>
+        <p class="text-gray-300 leading-relaxed" dir="rtl">
+          مسرحية عائله اكسبلور تحكي قصة عائلة تواجه تحديات غير متوقعة في رحلتهم اليومية،
+          مع الكثير من المواقف الكوميدية والعاطفية التي تمس القلب.
+        </p>
+      </div>
+      <!-- فريق العمل -->
+
+<div class="mb-8">
+  <h3 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">The Cast</h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">    <!-- شخصية 1 -->
+    <div class="text-center" style="width: 100px;">
+      <img class="aspect-square rounded-full bg-gray-200 mb-3 mx-auto hover:scale-105 transition-transform"
+           style="width: 100px; height: 100px;"
+           src="../../assets/img/elcapitano.webp"
+           alt="خالد مرسى">
+      <div class="leading-4">
+        <div class="text-white text-center text-sm font-semibold">خالد مرسى</div>
+      </div>
+    </div>
+
+    <!-- شخصية 2 -->
+    <div class="text-center" style="width: 100px;">
+      <img class="aspect-square rounded-full bg-gray-200 mb-3 mx-auto hover:scale-105 transition-transform"
+           style="width: 100px; height: 100px;"
+           src="../../assets/img/elhassan.webp"
+           alt="الحسن عادل">
+      <div class="leading-4">
+        <div class="text-white text-center text-sm font-semibold">الحسن عادل</div>
+      </div>
+    </div>
+
+    <!-- شخصية 3 -->
+    <div class="text-center" style="width: 100px;">
+      <img class="aspect-square rounded-full bg-gray-200 mb-3 mx-auto hover:scale-105 transition-transform"
+           style="width: 100px; height: 100px;"
+           src="../../assets/img/elhusen.webp"
+           alt=" الحسين عادل">
+      <div class="leading-4">
+        <div class="text-white text-center text-sm font-semibold">الحسين عادل</div>
+      </div>
+    </div>
+
+    <!-- شخصية 4 -->
+    <div class="text-center" style="width: 100px;">
+      <img class="aspect-square rounded-full bg-gray-200 mb-3 mx-auto hover:scale-105 transition-transform"
+           style="width: 100px; height: 100px;"
+           src="../../assets/img/judy.webp"
+           alt="جودى خالد">
+      <div class="leading-4">
+        <div class="text-white text-center text-sm font-semibold">جودى خالد</div>
+      </div>
+    </div>
+
+    <!-- شخصية 5 -->
+    <div class="text-center" style="width: 100px;">
+      <img class="aspect-square rounded-full bg-gray-200 mb-3 mx-auto hover:scale-105 transition-transform"
+           style="width: 100px; height: 100px;"
+           src="../../assets/img/soly.webp"
+           alt="ايسل خالد">
+      <div class="leading-4">
+        <div class="text-white text-center text-sm font-semibold">ايسل خالد</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- الشروط والأحكام -->
+      <div>
+        <h3 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">Terms & Conditions</h3>
+        <ul class="text-gray-300 list-disc list-inside space-y-2" dir="rtl">
+          <li class="text-red-600">التصوير غير مسموح أثناء العرض نهائيا</li>
+          <li class="text-red-600">الرجاء الحضور إلى موقع الفعالية قبل موعد بدء العرض بـ 30 دقيقة على الأقل</li>
+          <li class="text-red-600">لا يُسمح بإرجاع التذاكر أو استبدالها لأي سبب، لذا يُرجى التأكد من اختيار التذاكر المناسبة قبل إتمام الحجز</li>
+          <li class="text-red-600">يلتزم جميع الحضور باتباع التعليمات والإرشادات المُعلنة</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+

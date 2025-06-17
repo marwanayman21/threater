@@ -1,0 +1,84 @@
+:host {
+  z-index: 50;
+  position: relative;
+}
+/* تنسيق روابط القائمة */
+.nav-link {
+  color: #a19a9a;
+  font-size: 1.1rem;
+  text-decoration: none;
+  position: relative;
+  padding: 6px 20px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  color: #0ef;
+}
+
+/* تأثير الـ span (النص الدائري) */
+.nav-span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-bottom: 2px solid #0ef;
+  border-radius: 15px;
+  transform: scale(0) translateY(50px);
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.nav-link:hover .nav-span {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* تنسيق القائمة المنسدلة للجوال */
+.mobile-nav {
+  display: block;
+}
+
+.mobile-nav-link {
+  display: block;
+  color: #a19a9a;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.mobile-nav-link:hover {
+  color: #0ef;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* إخفاء القائمة المنسدلة عندما تكون مغلقة */
+.mobile-nav:not(.active) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.mobile-nav.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* إخفاء القائمة المنسدلة في الديسكتوب */
+@media (min-width: 1024px) {
+  .mobile-nav {
+    display: none !important;
+  }
+}
+
+/* التأكد من إخفاء الأيقونة في الديسكتوب */
+.bx-menu {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .bx-menu {
+    display: block;
+  }
+}

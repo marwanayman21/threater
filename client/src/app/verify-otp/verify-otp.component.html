@@ -1,0 +1,101 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-800 p-4">
+  <div class="relative w-full max-w-[350px] md:max-w-[500px] lg:max-w-[750px] h-[600px] bg-gray-900 rounded-[30px] shadow-xl overflow-hidden">
+
+    <!-- Fluid Background -->
+    <div class="relative top-0 left-0">
+      <img src="assets/img/fluid-1.svg"
+           class="absolute top-[-55px] left-[-50px] w-[270px] md:w-[450px] md:top-[-70px] md:left-[-120px] md:h-[250px] lg:w-[500px] lg:top-[-150px] lg:left-[-120px] lg:h-[330px] rotate-90 scale-100 z-10">
+    </div>
+
+    <!-- OTP Form -->
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()"
+          class="absolute flex flex-col justify-between w-full h-full p-6 md:p-8 lg:p-10 z-20">
+
+      <!-- Back Icon -->
+      <div class="flex justify-start z-50">
+        <i class="bx bx-arrow-back text-[#7D476C] text-2xl md:text-3xl cursor-pointer"
+           (click)="router.navigate(['/login'])"></i>
+      </div>
+
+      <!-- Form Title -->
+      <div class="text-[#ede7e7] text-xl md:text-2xl font-medium mb-8 z-50 text-center">
+        <span>Verify Your<br>Email</span>
+      </div>
+
+      <!-- OTP Input -->
+      <div class="flex flex-col items-center">
+        <p class="text-[#ede7e7] text-center mb-6">
+          لقد ارسلنا كود التحقق الخاص بك على<br>
+          <strong class="text-[#7D476C]">{{email}}</strong>
+          <br> يرجى النظر فى البريد الوارد الخاص بك
+          <br> spam | أو مجلد الرسائل غير المرغوب فيها
+        </p>
+
+        <div class="relative my-6 md:my-8 z-50 w-full">
+          <input
+            id="otp"
+            type="text"
+            formControlName="otp"
+            maxlength="6"
+            placeholder=" "
+            class="text-white w-full h-12 md:h-14 text-center text-base md:text-lg pt-2 bg-transparent border-b border-[#7D476C] outline-none peer"
+            required>
+          <label
+            for="otp"
+            class="absolute top-1/2 left-0 -translate-y-1/2 text-[#7D476C] font-medium transition-all duration-300 ease-in-out
+                   peer-focus:top-[-5%] peer-focus:-translate-y-[15%] peer-focus:text-sm md:peer-focus:text-base">
+            OTP Code
+          </label>
+        </div>
+
+        <div *ngIf="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched"
+             class="text-red-500 text-xs mb-6">
+          OTP is required and must be 6 digits
+        </div>
+
+<div class="text-center mb-6">
+  <button
+    type="button"
+    class="text-[#7D476C] font-medium"
+    [disabled]="isResendDisabled"
+    (click)="resendOtp()"
+  >
+    Didn't receive code?
+    <span class="underline">
+      Resend {{ resendCountdown > 0 ? '(' + resendCountdown + 's)' : '' }}
+    </span>
+  </button>
+</div>
+
+      </div>
+
+      <!-- Submit Button -->
+      <div class="relative z-50">
+        <button type="submit"
+                [disabled]="otpForm.invalid || isLoading"
+                class="flex items-center justify-center gap-1 w-full h-12 md:h-14 text-base md:text-lg bg-[#7D476C] text-[#ede7e7] rounded-full transition-all duration-300 hover:gap-4 disabled:opacity-50">
+          <span *ngIf="!isLoading">Verify</span>
+          <span *ngIf="isLoading">Verifying...</span>
+          <i *ngIf="!isLoading" class="bx bx-arrow-back rotate-180"></i>
+        </button>
+      </div>
+<!-- أضف هذا الجزء قبل نهاية div الرئيسية -->
+<div *ngIf="isVerified" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-gray-900 p-8 rounded-[30px] max-w-md w-full mx-4 text-center border border-[#7D476C]">
+    <div class="text-[#7D476C] text-6xl mb-4">
+      <i class='bx bx-check-circle'></i>
+    </div>
+    <h3 class="text-[#ede7e7] text-xl md:text-2xl font-medium mb-2">Your Account has been verified</h3>
+    <p class="text-[#ede7e7] mb-4">Now you can login</p>
+    <p class="text-[#7D476C] text-sm">
+      You will be redirected to login page in ({{ countdown }} seconds)
+    </p>
+  </div>
+</div>
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="text-red-500 text-center text-sm mt-4">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>

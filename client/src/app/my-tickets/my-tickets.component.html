@@ -1,0 +1,95 @@
+<div class="min-h-screen bg-gray-900 py-10 px-4">
+  <app-header></app-header>
+
+  <div class="max-w-4xl mx-auto pt-24 px-4 md:px-24">
+    <h2 class="text-2xl font-semibold text-gray-200 mb-1">Tickets</h2>
+    <p class="text-gray-400 mb-4">These are your tickets for your events</p>
+
+        <!-- عرض الرسالة إذا لم توجد تذاكر -->
+    <div *ngIf="tickets.length === 0" class="bg-neutral-800 text-center text-gray-200 mt-10">
+      You don't have any tickets yet 🎟️
+    </div>
+    <div
+      *ngFor="let ticket of tickets"
+      (click)="selectTicket(ticket)"
+      class="relative bg-neutral-800 rounded-xl shadow-md p-4 flex flex-col lg:flex-row justify-between gap-4 items-center mb-6 cursor-pointer hover:shadow-cyan-500/20 transition-all"
+      [ngStyle]="{ opacity: ticket.isScanned ? '0.4' : '1' }"
+    >
+      <!-- USED Banner -->
+      <div
+        *ngIf="ticket.isScanned"
+        class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow"
+      >
+        USED
+      </div>
+
+      <!-- Poster + Details -->
+      <div class="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-4 gap-y-4 flex-1 w-full">
+        <img
+          src="../../assets/img/poster.webp"
+          alt="Poster"
+          class="w-full sm:w-40 h-auto sm:h-48 rounded-md object-cover bg-gray-800 shadow-md"
+        />
+
+        <div class="text-center sm:text-left text-gray-100">
+          <h2 class="text-xl font-bold mb-2">عائلة اكسبلور</h2>
+
+          <div class="flex items-center justify-center sm:justify-start mb-2 text-sm text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {{ ticket.day }}
+          </div>
+
+          <div class="flex items-center justify-center sm:justify-start mb-2 text-sm text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          مسرح جراند طيبة - مول - مدينة نصر
+          </div>
+
+          <p class="text-sm text-gray-300">🎟️ المقاعد: {{ ticket.seat }}</p>
+        </div>
+      </div>
+
+      <!-- QR & Ticket Code -->
+      <div class="md:border-l border-gray-700 pl-0 md:pl-4 text-center w-full md:w-auto">
+        <p class="text-sm text-gray-400">كود الحجز</p>
+        <p class="text-lg font-bold tracking-wide text-white mt-1">{{ ticket.ticketCode }}</p>
+        <img [src]="ticket.qr" alt="QR Code" class="mx-auto mt-3 w-24 h-24 rounded-md bg-white p-1" />
+      </div>
+    </div>
+
+    <!-- Selected Ticket Details Modal -->
+    <div *ngIf="selectedTicket" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+      <div class="bg-neutral-900 text-white rounded-xl p-6 w-11/12 md:w-1/2 max-w-md relative">
+        <button (click)="selectedTicket = null" class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl">&times;</button>
+        <img src="../../assets/img/poster.webp" class="w-full h-40 rounded-lg object-cover mb-4" />
+        <h3 class="text-xl font-bold mb-1">{{ selectedTicket.title }}</h3>
+        <p class="text-gray-400 text-sm mb-2">{{ selectedTicket.location }}</p>
+
+        <div class="grid grid-cols-2 gap-4 border-t border-gray-700 pt-4 text-sm">
+          <div>
+            <p class="text-gray-400">الميعاد</p>
+            <p>{{ selectedTicket.day }}</p>
+          </div>
+
+          <div>
+            <p class="text-gray-400">الكراسى</p>
+            <p>{{ selectedTicket.seat }}</p>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center">
+          <p class="text-gray-400 text-sm mb-1">كود الحجز</p>
+          <p class="font-mono bg-gray-800 p-2 rounded inline-block text-white">{{ selectedTicket.ticketCode }}</p>
+        </div>
+
+        <div class="mt-4 flex justify-center">
+          <img [src]="selectedTicket.qr" alt="QR Code" class="w-32 h-32" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

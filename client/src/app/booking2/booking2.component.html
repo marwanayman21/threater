@@ -1,0 +1,267 @@
+<app-header-details></app-header-details>
+<div class="w-full flex-1 bg-gray-800 py-2">
+  <div class="flex w-full justify-center px-3">
+    <button
+      class="flex items-center justify-center text-center border border-gray-400 dark:border-0 w-full mx-auto rounded-full gap-2 px-4 py-2 bg-[#575F6B] text-gray-300"
+      style="max-width: 480px; height: 48px;"
+    >
+      <div class="truncate text-ellipsis whitespace-nowrap overflow-hidden flex-1 text-center">
+        <i class="mdi mdi-calendar mdi-18px"></i>
+        {{ selectedShow }}
+      </div>
+    </button>
+  </div>
+</div>
+
+
+  <!-- Main content area -->
+  <div class="flex flex-col h-[50%] sm:h-screen bg-[#414951]  sm:flex-row  font-sans overflow-hidden">
+
+    <!-- Movable container -->
+<div class="flex-1 zoom-container w-full"
+     [style.transform]="transformStyle"
+     #zoomContainer
+     (mousedown)="startDrag($event)"
+     (mousemove)="onDrag($event)"
+     (mouseup)="endDrag()"
+     (wheel)="onZoom($event)"
+     (touchstart)="startDrag($event)"
+     (touchmove)="handleTouchMove($event)"
+     (touchend)="endDrag()">
+
+      <!-- Main sections -->
+      <div class="flex flex-col items-center gap-1 w-full px-2 md:px-0">
+        <!-- Silver Section (formerly Balcony) -->
+        <div *ngFor="let row of upperRows" class="grid grid-cols-3 w-full justify-center gap-32 md:gap-10">
+          <!-- Left seats -->
+          <div class="flex-1 flex justify-end pe-1 md:pe-2 gap-1.5">
+            <div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Upper'), row) | filterPosition:'Left'"
+                 class="w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+                 [class.bg-selected]="seat.selected"
+                 [class.bg-upper]="!seat.booked && !seat.selected"
+                 [class.bg-booked]="seat.booked"
+                 (click)="toggleSeat(seat)">
+              {{seat.seatCode}}
+            </div>
+          </div>
+
+          <!-- Center seats -->
+          <div class="flex-1 flex justify-center pe-1 md:pe-2 gap-1.5">
+            <div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Upper'), row) | filterPosition:'Center'"
+                class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+                [class.bg-selected]="seat.selected"
+                [class.bg-upper]="!seat.booked && !seat.selected"
+                [class.bg-booked]="seat.booked"
+                (click)="toggleSeat(seat)">
+              {{seat.seatCode}}
+            </div>
+          </div>
+
+          <!-- Right seats -->
+          <div class="flex-1 flex justify-start pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Upper'), row) | filterPosition:'Right'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-upper]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+        </div>
+
+        <!-- Divider between sections -->
+        <div class="w-full relative my-1">
+          <div class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 px-2">
+            <span class="text-white text-sm font-bold select-none">B A L C O N Y</span>
+          </div>
+          <div class="w-full border-t border-gray-300 mt-3"></div>
+        </div>
+        <!-- Gold Section (formerly Normal) -->
+        <div *ngFor="let row of groundSection1Rows" class="grid grid-cols-3 w-full justify-center gap-32 md:gap-10">
+          <!-- Left seats -->
+          <div class="flex-1 flex justify-end pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground1'), row) | filterPosition:'Left'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground1]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+
+          <!-- Center seats -->
+          <div class="flex-1 flex justify-center pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground1'), row) | filterPosition:'Center'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground1]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+
+          <!-- Right seats -->
+          <div class="flex-1 flex justify-start pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground1'), row) | filterPosition:'Right'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground1]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+        </div>
+
+        <!-- Divider between sections -->
+        <div class="w-full border-t border-gray-300 my-1"></div>
+
+        <!-- Platinum Section (formerly VIP) -->
+        <div *ngFor="let row of groundSection2Rows" class="grid grid-cols-3 w-full justify-center gap-28 md:gap-10">
+          <!-- Left seats -->
+          <div class="flex-1 flex justify-end pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground2'), row) | filterPosition:'Left'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground2]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+
+          <!-- Center seats -->
+          <div class="flex-1 flex justify-center pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground2'), row) | filterPosition:'Center'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground2]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+
+          <!-- Right seats -->
+          <div class="flex-1 flex justify-start pe-1 md:pe-2 gap-1.5">
+<div *ngFor="let seat of getSeatsByRow(getSeatsBySection('Ground2'), row) | filterPosition:'Right'"
+     class="seat-item w-4 h-4 md:w-6 md:h-6 rounded-sm flex items-center justify-center text-[8px] md:text-xs text-white cursor-pointer select-none"
+     [class.bg-selected]="seat.selected"
+     [class.bg-ground2]="!seat.booked && !seat.selected"
+     [class.bg-booked]="seat.booked"
+     (click)="toggleSeat(seat)">
+  {{seat.seatCode}}
+</div>
+          </div>
+        </div>
+              <!-- Stage -->
+      <div class="w-full h-8 md:h-12 mx-auto bg-gray-800 rounded-b-lg flex items-center justify-center mt-2 md:mt-4 max-w-[90%]">
+        <span class="text-white font-bold select-none text-xs md:text-base">Stage</span>
+      </div>
+      </div>
+
+
+    </div>
+
+  <!-- Right side booking panel -->
+ <div
+    class="flex-2 w-full sm:w-[320px] h-[50%] sm:h-screen overflow-hidden  shadow-md border-t sm:border-t-0 sm:border-l border-gray-600 bg-[#292D33] flex flex-col z-10"
+  >
+    <!-- Scrollable content container -->
+    <div class="flex-1 overflow-y-auto px-3 pt-4 pb-24">
+      <!-- Legend: Seat Types -->
+      <div class="border-b border-gray-500 mb-2 pb-2" *ngFor="let type of seatTypes">
+        <div class="flex items-center mb-1 gap-2">
+          <div class="rounded-full shrink-0" style="width: 20px; height: 20px;" [ngStyle]="{ 'background-color': type.color }"></div>
+          <div class=" text-white">{{ type.label }}</div>
+          <div class=" text-sm text-gray-300">({{ type.price }} EGP)</div>
+        </div>
+      </div>
+
+<!-- Selected Seats -->
+<div class="border-b border-gray-400 mb-2 pb-2">
+  <div class="flex justify-between items-center mb-2">
+    <h4 class="font-semibold text-gray-200">Selected Seats</h4>
+    <button *ngIf="selectedSeats.length > 0"
+            class="text-lg text-red-500 hover:text-red-700"
+            (click)="clearAllSelectedSeats()">
+      Clear All
+    </button>
+  </div>
+  <div class="flex items-center mb-1 gap-2" *ngFor="let group of groupedSelectedSeats()">
+    <div class="rounded-full shrink-0" style="width: 20px; height: 20px;" [ngStyle]="{ 'background-color': group.color }"></div>
+    <div>{{ group.count }} ×</div>
+    <div>{{ group.label }}</div>
+    <div class="text-gray-600 text-sm">{{ group.price }} EGP</div>
+  </div>
+  <div class="mt-2">
+    <div class="flex flex-wrap gap-2">
+      <div *ngFor="let seat of selectedSeats" class="btn btn-sm text-xs rounded-full gap-2 px-2 py-1"
+        [ngStyle]="{ 'background-color': getColorBySection(seat.section), color: '#000' }">
+        {{ seat.seatCode }}
+        <i class="mdi mdi-close mdi-14px cursor-pointer" (click)="removeSeat(seat); $event.stopPropagation()"></i>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- Fixed footer at bottom -->
+    <div class="p-3 border-t border-gray-600 bg-[#292D33] ">
+<div class="w-full">
+  <!-- Purchase Button with Total -->
+  <div class="flex justify-center">
+    <button
+      class="flex items-center justify-between text-center w-full bg-[#FFFD00] btn btn-primary btn-lg btn-raised rounded-full shadow-lg px-4 py-3"
+      style="max-width: 200px; height: 56px;"
+      (click)="openConfirmModal()" dir="rtl">
+      <div class="truncate flex items-center gap-2 font-bold" >
+        <span>ادفع {{ calculateTotal() }} جنيها</span>
+      </div>
+      <i class="mdi mdi-chevron-right mdi-24px"></i>
+    </button>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="showErrorMessage"
+      class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 text-center font-bold">
+    احجز مقاعدك أولاً
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="showConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-[hsl(217.5_11.4%_13.7%)] rounded-lg shadow-lg w-80 max-w-full"
+        role="alertdialog"
+        aria-modal="true"
+        tabindex="0">
+      <div class="border-b border-gray-400 px-6 py-4"></div>
+      <div id="alert-msg" class="px-6 py-4 text-gray-300 text-center text-base font-semibold">
+        <h2 class="text-lg font-bold mb-2">هل أنت متأكد أنك تريد متابعة الدفع؟</h2>
+        <p class="mb-4">سيتم تأكيد حجزك  مقابل المقاعد المحددة.</p>
+        <p class="text-sm text-gray-400">إذا كنت ترغب في الإلغاء، يرجى الضغط على "إلغاء".</p>
+      </div>
+      <div class="flex justify-end space-x-3 px-6 py-3 border-t border-gray-400">
+        <button (click)="closeConfirmModal()"
+                class="alert-button alert-button-role-cancel ion-activatable relative rounded-md px-4 py-2 bg-[hsla(218,10%,15%,1)] text-gray-200 font-semibold hover:bg-[hsla(240,1%,30%,1)] focus:outline-none focus:ring-2 focus:ring-gray-300">
+          إلغاء
+        </button>
+        <button (click)="proceedToPayment()"
+                class="alert-button ion-activatable relative rounded-md px-4 py-2 bg-[hsla(218,10%,15%,1)] text-gray-200 font-semibold hover:bg-[hsla(240,1%,30%,1)] focus:outline-none focus:ring-2 focus:ring-gray-300">
+          استمرار
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+  </div>
+
+  </div>
+
+
+
+

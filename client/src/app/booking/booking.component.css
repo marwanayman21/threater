@@ -1,0 +1,67 @@
+.alert-button {
+  position: relative;
+  overflow: hidden;
+}
+.bg-booked {
+    background-color: #ff0000 !important; /* اللون الأحمر للمقاعد المحجوزة */
+    cursor: not-allowed !important; /* تغيير شكل المؤشر */
+}
+.alert-button .ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 600ms linear;
+  background-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.alert-button:active .ripple {
+  transform: scale(4);
+  opacity: 0;
+  animation-name: ripple-animation;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+/* إضافة هذه الأنماط في نهاية الملف */
+/* @media (max-width: 640px) {
+  .seat-item {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    font-size: 8px !important;
+  }
+
+  .zoom-container {
+    overflow: visible;
+    touch-action: none;
+    transform-origin: center center;
+  }
+
+  .stage-container {
+    width: 90% !important;
+  }
+
+  .seat-row {
+    gap: 2px !important;
+  }
+
+  .seat-section {
+    gap: 4px !important;
+  }
+} */
+
+/* إضافة لتحسين أداء السحب */
+.zoom-container {
+  will-change: transform;
+  backface-visibility: hidden;
+}

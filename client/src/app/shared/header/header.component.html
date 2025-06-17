@@ -1,0 +1,57 @@
+<header class="fixed top-0 left-0 w-full py-2 px-4 md:px-24 bg-white/10 backdrop-blur-md border-b-2 border-white/20 z-[100] flex justify-between items-center h-[60px] select-none">
+  <a [routerLink]="['/home']" class="relative h-full w-[150px] flex items-center">
+    <img src="assets/img/text.svg" alt="Logo" class="h-[50px] w-auto object-contain">
+  </a>
+
+  <i class='bx bx-menu text-[#a19a9a] text-3xl cursor-pointer lg:hidden'
+     (click)="toggleMenu()"></i>
+
+<nav class="hidden lg:flex items-center space-x-2">
+  <a [routerLink]="['/home']" class="nav-link group" routerLinkActive="text-[#0ef]">
+    <span class="nav-span"></span> Home
+  </a>
+  <a [routerLink]="['/tickets']" class="nav-link group" routerLinkActive="text-[#0ef]">
+    <span class="nav-span"></span> My Tickets
+  </a>
+
+  <ng-container *ngIf="!isLoggedIn">
+    <a [routerLink]="['/login']" class="nav-link group" routerLinkActive="text-[#0ef]">
+      <span class="nav-span mdi mdi-account-circle mdi-18px"></span>
+      Sign up / Sign In
+    </a>
+  </ng-container>
+
+  <ng-container *ngIf="isLoggedIn">
+    <div class="relative">
+      <div class="w-8 h-8 flex items-center justify-center rounded-full text-white cursor-pointer"
+           [ngClass]="bgColor"
+           (click)="toggleDropdown()">
+        {{ userInitial }}
+      </div>
+
+      <div *ngIf="showDropdown"
+           class="absolute -right-18 mt-4 w-32 bg-white/10  shadow-lg rounded-lg p-2 z-10">
+        <button (click)="logout()" class=" nav-link group">Log out</button>
+      </div>
+    </div>
+  </ng-container>
+</nav>
+
+</header>
+
+
+
+<div class="mobile-nav fixed top-14 left-0 w-full bg-white/10 backdrop-blur-md border-b-2 border-white/20 z-[99] overflow-hidden transition-all duration-300"
+  [class]="isMenuOpen ? 'mobile-nav active h-auto' : 'mobile-nav h-0'">
+  <a [routerLink]="['/home']" class="mobile-nav-link" (click)="isMenuOpen = false">Home</a>
+  <a [routerLink]="['/tickets']" class="mobile-nav-link" (click)="isMenuOpen = false">My Tickets</a>
+
+  <ng-container *ngIf="!isLoggedIn">
+    <a [routerLink]="['/login']" class="mobile-nav-link" (click)="isMenuOpen = false">Sign up / Sign In</a>
+  </ng-container>
+
+  <ng-container *ngIf="isLoggedIn">
+    <button (click)="logout(); isMenuOpen = false" class="mobile-nav-link text-left w-full">Log out</button>
+  </ng-container>
+</div>
+
